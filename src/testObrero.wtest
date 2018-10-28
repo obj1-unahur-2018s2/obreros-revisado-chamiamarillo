@@ -1,0 +1,77 @@
+import obras.*
+import obreros.*
+import uocra.*
+
+describe "Prueba obreros parte uno" {
+	var unahur = new Obra(
+		ladrillo = 1000,
+		canio = 400,
+		fosforo = 8000,
+		arandela = 500,
+		cable = 0,
+		cinta = 0,
+		efectivo = 100000
+	)
+	//////////////////////
+	var ab1 = new Albanil()
+	var ab2 = new Albanil()
+	var gas1 = new Gasista()
+	var gas2 = new Gasista()
+	var plom1 = new Plomero()
+	
+	fixture {
+//		unahur.ladrillo(1000)
+//		unahur.canio(400)
+//		unahur.fosforo(8000)
+//		unahur.arandela(500)
+		uocra.jornalAlbanil(2000)
+		uocra.jornalEspecialistaBanioYCocina(3000)
+		uocra.jornalElectricista(3500)
+		unahur.agregarObrero(ab1)
+		unahur.agregarObrero(ab2)
+		unahur.agregarObrero(gas1)
+		unahur.agregarObrero(gas2)
+		unahur.agregarObrero(plom1)
+		ab2.estaDeLicencia(true)
+		ab1.consumo(unahur)
+		gas1.consumo(unahur)
+		gas2.consumo(unahur)
+		plom1.consumo(unahur)
+	}
+	
+	test "Cantidad de ladrillos rta 900" {
+		assert.equals(900,unahur.ladrillo())
+	}
+		
+	test "Cantidad de canio rta 384" {
+		assert.equals(384,unahur.canio())
+	}
+	
+	test "Cantidad de fosforo rta 7960" {
+		assert.equals(7960,unahur.fosforo())
+	}
+	
+	test "Cantidad de arandelas rta 470" {
+		assert.equals(470,unahur.arandela())
+	}
+	
+	test "Existe obrero gas2" {
+		assert.that(unahur.existeObrero(gas2))
+	}
+	
+	test "Existe obrero ab1" {
+		assert.that(unahur.existeObrero(ab1))
+	}
+	
+	test "Existe obrero ab2" {
+		assert.notThat(unahur.existeObrero(ab2))
+	}
+	test "efectivo obra al inicio rta 100000" {
+		assert.equals(100000,unahur.efectivo())
+	}
+	test "dos jornada laborales para ab1 rta 4000" {
+		unahur.jornadaLaboral(ab1)
+		unahur.jornadaLaboral(ab1)
+		assert.equals(4000,ab1.efectivoACobrar())
+	}
+}
