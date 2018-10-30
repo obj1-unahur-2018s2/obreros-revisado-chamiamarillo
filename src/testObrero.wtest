@@ -1,6 +1,6 @@
 import obras.*
 import obreros.*
-import uocra.*
+//import uocra.*
 
 describe "Prueba obreros parte uno" {
 	var unahur = new Obra(
@@ -24,9 +24,9 @@ describe "Prueba obreros parte uno" {
 //		unahur.canio(400)
 //		unahur.fosforo(8000)
 //		unahur.arandela(500)
-		uocra.jornalAlbanil(2000)
-		uocra.jornalEspecialistaBanioYCocina(3000)
-		uocra.jornalElectricista(3500)
+//		uocra.jornalAlbanil(2000)
+//		uocra.jornalEspecialistaBanioYCocina(3000)
+//		uocra.jornalElectricista(3500)
 		unahur.agregarObrero(ab1)
 		unahur.agregarObrero(ab2)
 		unahur.agregarObrero(gas1)
@@ -69,9 +69,18 @@ describe "Prueba obreros parte uno" {
 	test "efectivo obra al inicio rta 100000" {
 		assert.equals(100000,unahur.efectivo())
 	}
-	test "dos jornada laborales para ab1 rta 4000" {
-		unahur.jornadaLaboral(ab1)
-		unahur.jornadaLaboral(ab1)
+	test "dos jornada laborales especial para ab2 (porque estaba de licencia en una 
+	jornada laboral) rta 2000" {
+		
+		unahur.jornadaLaboral()
+		ab2.estaDeLicencia(false)
+		unahur.jornadaLaboral()
+
 		assert.equals(4000,ab1.efectivoACobrar())
+		assert.equals(2000,ab2.efectivoACobrar())
+		assert.equals(6000,gas1.efectivoACobrar())
+		assert.equals(6000,gas2.efectivoACobrar())
+		assert.equals(6000,plom1.efectivoACobrar())
+		
 	}
 }

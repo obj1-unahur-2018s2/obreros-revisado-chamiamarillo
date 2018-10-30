@@ -43,8 +43,10 @@ class Obra {
 	method existeObrero(_obrero) { return self.plantillaDisponible().contains(_obrero) }
 	
 	// Para pago de jornal
-	method jornadaLaboral(_obrero) {
-		self.plantillaDisponible().forEach({ _obr => _obr.jornalTrabajado(self)})
+	method jornadaLaboral() {
+		self.plantillaDisponible().forEach({ obr => 
+			obr.jornalTrabajado(self)
+		})
 	}
 	// Sacar el importe adeudado de todos los obreros de la obra
 	method importeAdeudado() {

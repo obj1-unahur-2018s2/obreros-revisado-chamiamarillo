@@ -3,13 +3,13 @@ import uocra.*
 
 class Obrero {
 	var property estaDeLicencia = false
-	var property diasAdeudados // para multiplicar por lo que vale cada jornal de los obreros
-	var property efectivoACobrar
+	var property diasAdeudados = 0 // para multiplicar por lo que vale cada jornal de los obreros
+	var property efectivoACobrar = 0
 	
 	method consumo(_obra)
-	method diasTrabajados(_obrero) { diasAdeudados += 1 }
+	method sumarDiaTrabajado() { diasAdeudados += 1 }
 	method jornalTrabajado(_obra) {
-		self.diasTrabajados(self)
+		self.sumarDiaTrabajado()
 		self.consumo(_obra)
 	}	
 	
@@ -22,7 +22,7 @@ class Albanil inherits Obrero {
 	}
 	override method jornalTrabajado(_obra) {
 		super(_obra)
-		efectivoACobrar = efectivoACobrar + (diasAdeudados * uocra.jornalAlbanil())
+		self.efectivoACobrar(diasAdeudados * uocra.jornalAlbanil())
 	}
 }
 
@@ -34,7 +34,7 @@ class Gasista inherits Obrero {
 	}
 	override method jornalTrabajado(_obra) {
 		super(_obra)
-		efectivoACobrar = efectivoACobrar + (diasAdeudados * uocra.jornalEspecialistaBanioYCocina())
+		self.efectivoACobrar(diasAdeudados * uocra.jornalEspecialistaBanioYCocina())
 	}
 	
 }
@@ -47,7 +47,7 @@ class Plomero inherits Obrero {
 	}
 	override method jornalTrabajado(_obra) {
 		super(_obra)
-		efectivoACobrar = efectivoACobrar + (diasAdeudados * uocra.jornalEspecialistaBanioYCocina())
+		self.efectivoACobrar(diasAdeudados * uocra.jornalEspecialistaBanioYCocina())
 	}
 }
 
@@ -59,6 +59,8 @@ class Electricista inherits Obrero {
 	}	
 	override method jornalTrabajado(_obra) {
 		super(_obra)
-		efectivoACobrar = efectivoACobrar + (diasAdeudados * uocra.jornalElectricista())
+		self.efectivoACobrar(diasAdeudados * uocra.jornalElectricista())
 	}
 }
+
+
